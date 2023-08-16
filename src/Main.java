@@ -10,6 +10,7 @@ public class Main {
         gameBoard.resetBoard();
         boolean gameCheck = true;
 
+        System.out.println("Game Start");
         while(gameCheck) {
             gameBoard.displayBoard();
             playerInput(gameBoard);
@@ -131,9 +132,44 @@ class GameBoard{
                 arr[idx].setCanMerge(true);
             }
             tracker.clear();
-            displayBoard();
         }
+            displayBoard();
     }
+
+    public void moveRight() {
+        for (CellElement[] arr : board) {
+            ArrayList<Integer> tracker = new ArrayList<Integer>();
+            for (int i = arr.length - 2; i >= 0; i--) {
+                if (arr[i].getCellValue() > 0) {
+                    int idx = i + 1;
+                    while (idx < arr.length) {
+                        if (arr[idx].getCellValue() == 0) {
+                            arr[idx].setCellValue(arr[i].getCellValue());
+                            arr[i].setCellValue(0);
+                            i = idx;
+                            idx++;
+                        } else if (arr[idx].getCellValue() == arr[i].getCellValue() && arr[idx].getCanMerge()) {
+                            arr[idx].setCellValue(arr[idx].getCellValue() + arr[i].getCellValue());
+                            arr[i].setCellValue(0);
+                            arr[idx].setCanMerge(false);
+                            tracker.add(idx);
+                            i = idx;
+                            idx = arr.length;
+                        } else {
+                            idx = arr.length;
+                        }
+                    }
+                }
+            }
+            for (int idx : tracker) {
+                arr[idx].setCanMerge(true);
+            }
+            tracker.clear();
+        }
+        displayBoard();
+    }
+
+
 
 
     public void resetBoard() {

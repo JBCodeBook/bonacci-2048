@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MergeLeftTest {
+public class MergeRightTest {
 
     private GameBoard gameBoard;
 
@@ -22,14 +22,14 @@ public class MergeLeftTest {
         };
 
         int[][] expectedBoardValues = {
-                {2,0,0,0},
-                {2,0,0,0},
-                {2,0,0,0},
-                {2,0,0,0}
+                {0,0,0,2},
+                {0,0,0,2},
+                {0,0,0,2},
+                {0,0,0,2}
         };
 
         initializeGameBoard(gameBoard, initialBoardValues);
-        gameBoard.moveLeft();
+        gameBoard.moveRight();
         CellElement[][] actualBoard = gameBoard.getBoard();
 
         assertBoardValues(expectedBoardValues, actualBoard);
@@ -45,15 +45,15 @@ public class MergeLeftTest {
         };
 
         int[][] expectedBoardValues = {
-                {4,0,0,0},
-                {2,4,0,0},
-                {2,8,0,0},
-                {2,16,0,0}
+                {0,0,0,4},
+                {0,0,2,4},
+                {0,0,2,8},
+                {0,0,0,32}
         };
 
         initializeGameBoard(gameBoard, initialBoardValues);
-        gameBoard.moveLeft();
-        gameBoard.moveLeft();
+        gameBoard.moveRight();
+        gameBoard.moveRight();
         CellElement[][] actualBoard = gameBoard.getBoard();
 
         assertBoardValues(expectedBoardValues, actualBoard);
