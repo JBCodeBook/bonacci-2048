@@ -105,7 +105,7 @@ class GameBoard{
 
     public void moveLeft() {
         for (CellElement[] arr : board) {
-            ArrayList<Integer> tracker = new ArrayList<Integer>();
+            ArrayList<Integer> tracker = new ArrayList<>();
             for (int i = 1; i < arr.length; i++) {
                 if (arr[i].getCellValue() > 0) { // Use '> 0' to avoid moving zeros
                     int idx = i - 1;
@@ -138,7 +138,7 @@ class GameBoard{
 
     public void moveRight() {
         for (CellElement[] arr : board) {
-            ArrayList<Integer> tracker = new ArrayList<Integer>();
+            ArrayList<Integer> tracker = new ArrayList<>();
             for (int i = arr.length - 2; i >= 0; i--) {
                 if (arr[i].getCellValue() > 0) {
                     int idx = i + 1;
@@ -169,7 +169,71 @@ class GameBoard{
         displayBoard();
     }
 
+    public void moveUp() {
+        for (int j = 0; j < board[0].length; j++) {
+            ArrayList<Integer> tracker = new ArrayList<>();
+            for (int i = 1; i < board.length; i++) {
+                if (board[i][j].getCellValue() > 0) {
+                    int idx = i - 1;
+                    while (idx >= 0) {
+                        if (board[idx][j].getCellValue() == 0) {
+                            board[idx][j].setCellValue(board[i][j].getCellValue());
+                            board[i][j].setCellValue(0);
+                            i = idx;
+                            idx--;
+                        } else if (board[idx][j].getCellValue() == board[i][j].getCellValue() && board[idx][j].getCanMerge()) {
+                            board[idx][j].setCellValue(board[idx][j].getCellValue() + board[i][j].getCellValue());
+                            board[i][j].setCellValue(0);
+                            board[idx][j].setCanMerge(false);
+                            tracker.add(idx);
+                            i = idx;
+                            idx = -1;
+                        } else {
+                            idx = -1;
+                        }
+                    }
+                }
+            }
+            for (int idx : tracker) {
+                board[idx][j].setCanMerge(true);
+            }
+            tracker.clear();
+        }
+        displayBoard();
+    }
 
+    public void moveDown() {
+        for (int j = 0; j < board[0].length; j++) {
+            ArrayList<Integer> tracker = new ArrayList<>();
+            for (int i = board.length - 2; i >= 0; i--) {
+                if (board[i][j].getCellValue() > 0) {
+                    int idx = i + 1;
+                    while (idx < board.length) {
+                        if (board[idx][j].getCellValue() == 0) {
+                            board[idx][j].setCellValue(board[i][j].getCellValue());
+                            board[i][j].setCellValue(0);
+                            i = idx;
+                            idx++;
+                        } else if (board[idx][j].getCellValue() == board[i][j].getCellValue() && board[idx][j].getCanMerge()) {
+                            board[idx][j].setCellValue(board[idx][j].getCellValue() + board[i][j].getCellValue());
+                            board[i][j].setCellValue(0);
+                            board[idx][j].setCanMerge(false);
+                            tracker.add(idx);
+                            i = idx;
+                            idx = board.length;
+                        } else {
+                            idx = board.length;
+                        }
+                    }
+                }
+            }
+            for (int idx : tracker) {
+                board[idx][j].setCanMerge(true);
+            }
+            tracker.clear();
+        }
+        displayBoard();
+    }
 
 
     public void resetBoard() {

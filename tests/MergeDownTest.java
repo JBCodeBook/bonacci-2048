@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MergeRightTest {
+public class MergeDownTest {
 
     private GameBoard gameBoard;
 
@@ -13,48 +13,45 @@ public class MergeRightTest {
     }
 
     @Test
-    public void testMergeRightCase1() {
+    public void testMergeDownCase1() {
         int[][] initialBoardValues = {
-                {0,1,1,0},
-                {0,1,1,0},
-                {0,1,1,0},
-                {0,1,1,0}
+                {0, 1, 1, 0},
+                {0, 1, 1, 0},
+                {0, 1, 1, 0},
+                {0, 1, 1, 0}
         };
 
         int[][] expectedBoardValues = {
-                {0,0,0,2},
-                {0,0,0,2},
-                {0,0,0,2},
-                {0,0,0,2}
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 2, 2, 0},
+                {0, 2, 2, 0}
         };
-
         initializeGameBoard(gameBoard, initialBoardValues);
-        gameBoard.moveRight();
+        gameBoard.moveDown();
         CellElement[][] actualBoard = gameBoard.getBoard();
 
         assertBoardValues(expectedBoardValues, actualBoard);
     }
 
     @Test
-    public void testMergeRightCase2() {
-        System.out.println("Starting merge2");
+    public void testMergeDownCase2() {
         int[][] initialBoardValues = {
-                {0,1,1,2},
-                {0,1,1,4},
-                {0,1,1,8},
-                {0,1,1,16}
+                {0, 1, 1, 0},
+                {0, 1, 1, 0},
+                {0, 1, 1, 0},
+                {0, 1, 1, 0}
         };
 
         int[][] expectedBoardValues = {
-                {0,0,0,4},
-                {0,0,2,4},
-                {0,0,2,8},
-                {0,0,2,16}
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 4, 4, 0}
         };
-
         initializeGameBoard(gameBoard, initialBoardValues);
-        gameBoard.moveRight();
-        gameBoard.moveRight();
+        gameBoard.moveDown();
+        gameBoard.moveDown();
         CellElement[][] actualBoard = gameBoard.getBoard();
 
         assertBoardValues(expectedBoardValues, actualBoard);
@@ -75,7 +72,4 @@ public class MergeRightTest {
                 assertEquals(expectedValues[i][j], actualBoard[i][j].getCellValue());
             }
         }
-    }
-
-
-}
+    }}
